@@ -1,0 +1,49 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<Version>1.0.0</Version>
+		<RootNamespace>NetworkChests</RootNamespace>
+		<AssemblyName>NetworkChests</AssemblyName>
+		<LangVersion>preview</LangVersion>
+		<ModFolderName>NetworkChests</ModFolderName>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Pathoschild.Stardew.ModBuildConfig" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="assets\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Reference Include="Automate">
+	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley\Mods\Automate\Automate.dll</HintPath>
+	    <Private>False</Private>
+	  </Reference>
+	  <Reference Include="MonoGame.Framework">
+	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley\MonoGame.Framework.dll</HintPath>
+	    <Private>False</Private>
+	  </Reference>
+	  <Reference Include="Stardew Valley">
+	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley\Stardew Valley.dll</HintPath>
+	    <Private>False</Private>
+	  </Reference>
+	  <Reference Include="StardewModdingAPI">
+	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley\StardewModdingAPI.dll</HintPath>
+	    <Private>False</Private>
+	  </Reference>
+	  <Reference Include="StardewValley.GameData">
+	    <HintPath>C:\Program Files (x86)\Steam\steamapps\common\Stardew Valley\StardewValley.GameData.dll</HintPath>
+	    <Private>False</Private>
+	  </Reference>
+	</ItemGroup>
+
+</Project>
+

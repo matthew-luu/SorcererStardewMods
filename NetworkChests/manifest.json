@@ -1,0 +1,17 @@
+{
+  "Name": "Network Chest",
+  "Author": "Sorcerer",
+  "Version": "1.0.0",
+  "MinimumApiVersion": "4.1.10",
+  "Description": "Adds shared storage networks through Network Chests, integrated with Automate.",
+  "UniqueID": "YourName.NetworkChests",
+  "EntryDll": "NetworkChests.dll",
+  "UpdateKeys": [
+  ],
+  "Dependencies": [
+    {
+      "UniqueID": "Pathoschild.Automate",
+      "IsRequired": true
+    }
+  ]
+}
