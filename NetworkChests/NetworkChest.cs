@@ -13,10 +13,14 @@ namespace NetworkChest
         public const string ItemId =
             "NetworkChest";
 
-        public const string QualifiedItemId = "(BC)" + ItemId;
+        public const string QualifiedItemId = 
+            "(BC)" + ItemId;
 
         public const string NetworkIdKey =
             "NetworkChest/NetworkId";
+
+        public const string NetworkIdsKey = 
+            "NetworkChest/NetworkIds";
 
         private const string InventoryPrefix =
             "NetworkChest/";
@@ -207,6 +211,21 @@ namespace NetworkChest
             {
                 if (inventory[i] is null)
                     inventory.RemoveAt(i);
+            }
+        }
+
+        public static void RegisterNetworkId(string networkId)
+        {
+            var data = Game1.player.modData;
+
+            var ids = data.TryGetValue(NetworkIdsKey, out string? value)
+                ? value.Split('|', StringSplitOptions.RemoveEmptyEntries).ToList()
+                : new List<string>();
+
+            if (!ids.Contains(networkId, StringComparer.OrdinalIgnoreCase))
+            {
+                ids.Add(networkId);
+                data[NetworkIdsKey] = string.Join("|", ids);
             }
         }
     }

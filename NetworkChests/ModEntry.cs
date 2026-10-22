@@ -1,12 +1,11 @@
-﻿
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using StardewValley;
+using Pathoschild.Stardew.Automate;
 using StardewModdingAPI;
 using StardewModdingAPI.Events;
-using StardewValley;
 using StardewValley.GameData.BigCraftables;
 using StardewValley.Menus;
-using Pathoschild.Stardew.Automate;
 
 namespace NetworkChest;
 
@@ -16,12 +15,15 @@ internal class ModEntry : Mod
     private const string NetworkChestTexture =
         "Sorcerer.Stardew.NetworkChest/assets/NetworkChest";
 
+    private string? ActiveNetworkChestId = null;
+
     public override void Entry(IModHelper helper)
     {
         helper.Events.GameLoop.GameLaunched += OnGameLaunched;
 
         helper.Events.Content.AssetRequested += OnAssetRequested;
         helper.Events.Input.ButtonPressed += OnButtonPressed;
+        helper.Events.Display.RenderedActiveMenu += OnRenderedActiveMenu;
     }
     private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
     {
@@ -117,34 +119,7 @@ internal class ModEntry : Mod
 
         if (networkId is null)
         {
-            Game1.activeClickableMenu = new NamingMenu(
-                value =>
-                {
-                    if (string.IsNullOrWhiteSpace(value))
-                        return;
-
-                    string savedId = value.Trim();
-                    NetworkChest.SetNetworkId(obj, savedId);
-
-                    this.Monitor.Log(
-                        $"Network Chest assigned to network '{savedId}'.",
-                        LogLevel.Info
-                    );
-
-                    this.Helper.Multiplayer.SendMessage(
-                        new
-                        {
-                            LocationName = location.Name,
-                            Tile = tile
-                        },
-                        "AutomateUpdateChestMessage",
-                        modIDs: new[] { "Pathoschild.Automate" }
-                    );
-
-                    this.OpenNetworkChest(savedId);
-                },
-                "Enter a Network ID:"
-            );
+            this.OpenNetworkSelectionMenu(obj, location, tile);
         }
         else
         {
@@ -152,9 +127,146 @@ internal class ModEntry : Mod
         }
     }
 
+
+    private List<string> GetNetworksWithItems()
+    {
+        // Migration: discover IDs from placed Network Chests.
+        foreach (GameLocation location in Game1.locations)
+        {
+            foreach (StardewValley.Object obj in location.objects.Values)
+            {
+                if (obj.QualifiedItemId != NetworkChest.QualifiedItemId)
+                    continue;
+
+                string? id = NetworkChest.GetNetworkId(obj);
+
+                if (!string.IsNullOrWhiteSpace(id))
+                    NetworkChest.RegisterNetworkId(id.Trim());
+            }
+        }
+
+        // Read all registered IDs, including networks with no placed chest.
+        if (!Game1.player.modData.TryGetValue(
+                NetworkChest.NetworkIdsKey,
+                out string? value))
+        {
+            return new List<string>();
+        }
+
+        return value
+            .Split('|', StringSplitOptions.RemoveEmptyEntries)
+            .Where(id => NetworkChest.GetInventory(id)
+                .Any(item => item is { Stack: > 0 }))
+            .OrderBy(id => id, StringComparer.OrdinalIgnoreCase)
+            .ToList();
+    }
+
+
+
+    private void OpenNetworkSelectionMenu(
+        StardewValley.Object chest,
+        GameLocation location,
+        Microsoft.Xna.Framework.Vector2 tile)
+    {
+        List<string> networks = this.GetNetworksWithItems();
+
+        // Build the selectable entries. Stardew handles pagination.
+        var responses = new List<KeyValuePair<string, string>>
+        {
+            new("network_add", "Add a new Network ID")
+        };
+
+        foreach (string id in networks)
+        {
+            responses.Add(new KeyValuePair<string, string>(
+                $"network_select_{id}",
+                id
+            ));
+        }
+
+        location.ShowPagedResponses(
+            "Select a Network ID:",
+            responses,
+            answer =>
+            {
+                if (answer == "network_add")
+                {
+                    Game1.activeClickableMenu = new NamingMenu(
+                        value =>
+                        {
+                            if (string.IsNullOrWhiteSpace(value))
+                                return;
+
+                            string newId = value.Trim();
+
+                            NetworkChest.RegisterNetworkId(newId);
+                            NetworkChest.SetNetworkId(chest, newId);
+
+                            this.SendNetworkChestUpdate(location, tile);
+
+                            this.Monitor.Log(
+                                $"Network Chest assigned to network '{newId}'.",
+                                LogLevel.Info
+                            );
+
+                            this.OpenNetworkChest(newId);
+                        },
+                        "Enter a Network ID:"
+                    );
+
+                    return;
+                }
+
+                if (answer.StartsWith("network_select_", StringComparison.Ordinal))
+                {
+                    string id = answer["network_select_".Length..];
+
+                    NetworkChest.RegisterNetworkId(id);
+                    NetworkChest.SetNetworkId(chest, id);
+
+                    this.SendNetworkChestUpdate(location, tile);
+
+                    this.Monitor.Log(
+                        $"Network Chest assigned to network '{id}'.",
+                        LogLevel.Info
+                    );
+
+                    this.OpenNetworkChest(id);
+                }
+            },
+            auto_select_single_choice: false,
+            addCancel: true,
+            itemsPerPage: 5
+        );
+    }
+
+
+    private void SendNetworkChestUpdate(
+    GameLocation location,
+    Microsoft.Xna.Framework.Vector2 tile)
+    {
+        this.Monitor.Log(
+            $"Sending AutomateUpdateChestMessage for {location.Name} at {tile}.",
+            LogLevel.Info
+        );
+
+        this.Helper.Multiplayer.SendMessage(
+            new
+            {
+                LocationName = location.Name,
+                Tile = tile
+            },
+            "AutomateUpdateChestMessage",
+            modIDs: new[] { "Pathoschild.Automate" }
+        );
+    }
+
+
     private void OpenNetworkChest(string networkId)
     {
         var inventory = NetworkChest.GetInventory(networkId);
+
+        this.ActiveNetworkChestId = networkId;
 
         Game1.activeClickableMenu = new ItemGrabMenu(
             inventory,
@@ -162,10 +274,51 @@ internal class ModEntry : Mod
             showReceivingMenu: true,
             InventoryMenu.highlightAllItems,
             NetworkChest.CreateDepositHandler(networkId),
-            message: $"Network: {networkId}",
+            message: null,
             behaviorOnItemGrab: NetworkChest.CreateWithdrawHandler(networkId),
             canBeExitedWithKey: true,
             showOrganizeButton: true
         );
     }
+
+    private void OnRenderedActiveMenu(
+    object? sender,
+    RenderedActiveMenuEventArgs e)
+    {
+        if (this.ActiveNetworkChestId is not string networkId)
+            return;
+
+        if (Game1.activeClickableMenu is not ItemGrabMenu menu)
+        {
+            this.ActiveNetworkChestId = null;
+            return;
+        }
+
+        // The receiving inventory is the upper inventory in the vanilla menu.
+        var storageMenu = menu.ItemsToGrabMenu;
+
+        string label = $"Network: {networkId}";
+        Vector2 textSize = Game1.dialogueFont.MeasureString(label);
+
+        float x = storageMenu.xPositionOnScreen
+            + (storageMenu.width - textSize.X) / 2f;
+
+        float y = storageMenu.yPositionOnScreen - textSize.Y - 12f;
+
+        // Draw a dark shadow for readability.
+        e.SpriteBatch.DrawString(
+            Game1.dialogueFont,
+            label,
+            new Vector2(x + 2f, y + 2f),
+            Color.Black * 0.9f
+        );
+
+        e.SpriteBatch.DrawString(
+            Game1.dialogueFont,
+            label,
+            new Vector2(x, y),
+            Color.White
+        );
+    }
+
 }
