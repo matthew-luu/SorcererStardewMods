@@ -1,0 +1,18 @@
+
+{
+  "Name": "Frontier - Yun Jian Falls Compatibility",
+  "Author": "Local Compatibility Patch",
+  "Version": "1.0.0",
+  "Description": "Enables Frontier minecarts by default and connects the Frontier and Yun Jian Falls minecart networks in both directions.",
+  "UniqueID": "LocalMods.FrontierYunJianCompatibility",
+  "MinimumApiVersion": "4.1.7",
+  "ContentPackFor": {
+    "UniqueID": "Pathoschild.ContentPatcher"
+  },
+  "Dependencies": [
+    {
+      "UniqueID": "flashshifter.FrontierFarm",
+      "IsRequired": true
+    }
+  ]
+}

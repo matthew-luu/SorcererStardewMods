@@ -1,0 +1,12 @@
+{
+    "Config.FarmReplacement.name": "Farm Type",
+    "Config.DynamicPanorama.name": "Dynamic Panorama",
+    "Lnh.YunJianFallsFarm.1": "Farmhouse",
+    "Lnh.YunJianFallsFarm.2": "FarmCave",
+    "Lnh.YunJianFallsFarm.3": "Greenhouse",
+    "Lnh.YunJianFallsFarm.4": "BusStop",
+    "Lnh.YunJianFallsFarm.5": "Forest",
+    "Lnh.YunJianFallsFarm.6": "Plant area",
+    "Lnh.YunJianFallsFarm.7": "Livestock",
+    "Lnh.YunJianFallsFarm.8": "Quarry"
+}

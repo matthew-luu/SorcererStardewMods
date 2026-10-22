@@ -1,0 +1,273 @@
+{
+  "Format": "2.9.0",
+  "Changes": [
+    {
+      "LogName": "Unlock Ravine Minecart",
+      "Action": "EditMap",
+      "Target": "Maps/Custom_FerngillRepublicFrontier",
+      "FromFile": "Assets/FrontierFarm_Minecart4.tmx",
+      "ToArea": {
+        "X": 134,
+        "Y": 30,
+        "Width": 1,
+        "Height": 1
+      }
+    },
+    {
+      "LogName": "Unlock Mountain Minecart",
+      "Action": "EditMap",
+      "Target": "Maps/Custom_FerngillRepublicFrontier",
+      "FromFile": "Assets/FrontierFarm_Minecart5.tmx",
+      "ToArea": {
+        "X": 71,
+        "Y": 5,
+        "Width": 1,
+        "Height": 1
+      }
+    },
+    {
+      "LogName": "Unlock Grasslands Minecart",
+      "Action": "EditMap",
+      "Target": "Maps/Custom_FerngillRepublicFrontier",
+      "FromFile": "Assets/FrontierFarm_Minecart6.tmx",
+      "ToArea": {
+        "X": 66,
+        "Y": 66,
+        "Width": 1,
+        "Height": 1
+      }
+    },
+    {
+      "LogName": "Unlock Beach Minecart",
+      "Action": "EditMap",
+      "Target": "Maps/Custom_FerngillRepublicFrontier",
+      "FromFile": "Assets/FrontierFarm_Minecart7.tmx",
+      "ToArea": {
+        "X": 47,
+        "Y": 127,
+        "Width": 1,
+        "Height": 1
+      }
+    },
+    {
+      "LogName": "Add light sources to Frontier Minecart Lamps",
+      "Action": "EditMap",
+      "Target": "Maps/Custom_FerngillRepublicFrontier",
+      "TextOperations": [
+        {
+          "Operation": "Append",
+          "Target": [
+            "MapProperties",
+            "Light"
+          ],
+          "Value": "135 29 4 72 4 4 67 65 4 48 126 4",
+          "Delimiter": " "
+        }
+      ]
+    },
+    {
+      "LogName": "Add day/night tiles to Frontier Minecart Lamps",
+      "Action": "EditMap",
+      "Target": "Maps/Custom_FerngillRepublicFrontier",
+      "MapProperties": {
+        "DayTiles": "Buildings 135 29 510 Buildings 72 4 510 Buildings 67 65 510 Buildings 48 126 510",
+        "NightTiles": "Buildings 135 29 507 Buildings 72 4 507 Buildings 67 65 507 Buildings 48 126 507"
+      }
+    },
+    {
+      "LogName": "Fix Frontier minecart network",
+      "Action": "EditData",
+      "Target": "Data/Minecarts",
+      "Priority": "Late",
+      "Entries": {
+        "FrontierFarm": {
+          "UnlockCondition": null,
+          "LockedMessage": null,
+          "ChooseDestinationMessage": null,
+          "BuyTicketMessage": null,
+          "Destinations": [
+            {
+              "Id": "FlashShifter.FernGillRepublic_Ravine",
+              "DisplayName": "Frontier - Ravine",
+              "Condition": null,
+              "TargetLocation": "Custom_FerngillRepublicFrontier",
+              "TargetTile": {
+                "X": 134,
+                "Y": 31
+              },
+              "TargetDirection": "down"
+            },
+            {
+              "Id": "FlashShifter.FernGillRepublic_Mountain",
+              "DisplayName": "Frontier - Mountains",
+              "Condition": null,
+              "TargetLocation": "Custom_FerngillRepublicFrontier",
+              "TargetTile": {
+                "X": 71,
+                "Y": 6
+              },
+              "TargetDirection": "down"
+            },
+            {
+              "Id": "FlashShifter.FernGillRepublic_Grassland",
+              "DisplayName": "Frontier - Grassland",
+              "Condition": null,
+              "TargetLocation": "Custom_FerngillRepublicFrontier",
+              "TargetTile": {
+                "X": 66,
+                "Y": 67
+              },
+              "TargetDirection": "down"
+            },
+            {
+              "Id": "FlashShifter.FernGillRepublic_Beach",
+              "DisplayName": "Frontier - Beach",
+              "Condition": null,
+              "TargetLocation": "Custom_FerngillRepublicFrontier",
+              "TargetTile": {
+                "X": 47,
+                "Y": 128
+              },
+              "TargetDirection": "down"
+            },
+            {
+              "Id": "YunJianFallsFarm.1",
+              "DisplayName": "{{i18n:Lnh.YunJianFallsFarm.1}}",
+              "TargetLocation": "Farm",
+              "TargetTile": {
+                "X": 46,
+                "Y": 30
+              },
+              "TargetDirection": "down"
+            },
+            {
+              "Id": "YunJianFallsFarm.2",
+              "DisplayName": "{{i18n:Lnh.YunJianFallsFarm.2}}",
+              "TargetLocation": "Farm",
+              "TargetTile": {
+                "X": 71,
+                "Y": 12
+              },
+              "TargetDirection": "down"
+            },
+            {
+              "Id": "YunJianFallsFarm.3",
+              "DisplayName": "{{i18n:Lnh.YunJianFallsFarm.3}}",
+              "TargetLocation": "Farm",
+              "TargetTile": {
+                "X": 107,
+                "Y": 14
+              },
+              "TargetDirection": "down"
+            },
+            {
+              "Id": "YunJianFallsFarm.4",
+              "DisplayName": "{{i18n:Lnh.YunJianFallsFarm.4}}",
+              "TargetLocation": "Farm",
+              "TargetTile": {
+                "X": 141,
+                "Y": 43
+              },
+              "TargetDirection": "down"
+            },
+            {
+              "Id": "YunJianFallsFarm.5",
+              "DisplayName": "{{i18n:Lnh.YunJianFallsFarm.5}}",
+              "TargetLocation": "Farm",
+              "TargetTile": {
+                "X": 98,
+                "Y": 93
+              },
+              "TargetDirection": "left"
+            },
+            {
+              "Id": "YunJianFallsFarm.6",
+              "DisplayName": "{{i18n:Lnh.YunJianFallsFarm.6}}",
+              "TargetLocation": "Farm",
+              "TargetTile": {
+                "X": 3,
+                "Y": 59
+              },
+              "TargetDirection": "down"
+            },
+            {
+              "Id": "YunJianFallsFarm.7",
+              "DisplayName": "{{i18n:Lnh.YunJianFallsFarm.7}}",
+              "TargetLocation": "Farm",
+              "TargetTile": {
+                "X": 29,
+                "Y": 73
+              },
+              "TargetDirection": "down"
+            },
+            {
+              "Id": "YunJianFallsFarm.8",
+              "DisplayName": "{{i18n:Lnh.YunJianFallsFarm.8}}",
+              "TargetLocation": "Farm",
+              "TargetTile": {
+                "X": 27,
+                "Y": 13
+              },
+              "TargetDirection": "down"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "LogName": "Add Frontier destinations to Yun Jian Falls minecarts",
+      "Action": "EditData",
+      "Target": "Data/Minecarts",
+      "Priority": "Late",
+      "When": {
+        "FarmType": "Standard"
+      },
+      "TargetField": [
+        "YunJianFallsFarmMinecarts",
+        "Destinations"
+      ],
+      "Entries": {
+        "LocalMods.FrontierYunJianCompatibility.Ravine": {
+          "Id": "LocalMods.FrontierYunJianCompatibility.Ravine",
+          "DisplayName": "Frontier - Ravine",
+          "TargetLocation": "Custom_FerngillRepublicFrontier",
+          "TargetTile": {
+            "X": 134,
+            "Y": 31
+          },
+          "TargetDirection": "down"
+        },
+        "LocalMods.FrontierYunJianCompatibility.Mountain": {
+          "Id": "LocalMods.FrontierYunJianCompatibility.Mountain",
+          "DisplayName": "Frontier - Mountain",
+          "TargetLocation": "Custom_FerngillRepublicFrontier",
+          "TargetTile": {
+            "X": 71,
+            "Y": 6
+          },
+          "TargetDirection": "down"
+        },
+        "LocalMods.FrontierYunJianCompatibility.Grassland": {
+          "Id": "LocalMods.FrontierYunJianCompatibility.Grassland",
+          "DisplayName": "Frontier - Grassland",
+          "TargetLocation": "Custom_FerngillRepublicFrontier",
+          "TargetTile": {
+            "X": 66,
+            "Y": 67
+          },
+          "TargetDirection": "down"
+        },
+        "LocalMods.FrontierYunJianCompatibility.Beach": {
+          "Id": "LocalMods.FrontierYunJianCompatibility.Beach",
+          "DisplayName": "Frontier - Beach",
+          "TargetLocation": "Custom_FerngillRepublicFrontier",
+          "TargetTile": {
+            "X": 47,
+            "Y": 128
+          },
+          "TargetDirection": "down"
+        }
+      }
+    }
+  ]
+}
