@@ -268,6 +268,63 @@
           "TargetDirection": "down"
         }
       }
+    },
+    {
+      "LogName": "Add vanilla minecarts to Yun Jian Falls minecarts",
+      "Action": "EditData",
+      "Target": "Data/Minecarts",
+      "Priority": "Late",
+      "When": {
+        "FarmType": "Standard"
+      },
+      "TargetField": [
+        "YunJianFallsFarmMinecarts",
+        "Destinations"
+      ],
+      "Entries": {
+        "LocalMods.FarmMinecarts.Mines": {
+          "Id": "LocalMods.FarmMinecarts.Mines",
+          "DisplayName": "[LocationName Mine]",
+          "TargetLocation": "Mine",
+          "TargetTile": {
+            "X": 13,
+            "Y": 9
+          },
+          "TargetDirection": "down",
+          "Condition": "PLAYER_HAS_MAIL Any landslideDone"
+        },
+        "LocalMods.FarmMinecarts.Town": {
+          "Id": "LocalMods.FarmMinecarts.Town",
+          "DisplayName": "[LocationName Town]",
+          "TargetLocation": "Town",
+          "TargetTile": {
+            "X": 105,
+            "Y": 80
+          },
+          "TargetDirection": "down"
+        },
+        "LocalMods.FarmMinecarts.Quarry": {
+          "Id": "LocalMods.FarmMinecarts.Quarry",
+          "DisplayName": "Quarry",
+          "TargetLocation": "Mountain",
+          "TargetTile": {
+            "X": 124,
+            "Y": 12
+          },
+          "TargetDirection": "down",
+          "Condition": "PLAYER_HAS_MAIL Host ccCraftsRoom Received"
+        },
+        "LocalMods.FarmMinecarts.BusStop": {
+          "Id": "LocalMods.FarmMinecarts.BusStop",
+          "DisplayName": "[LocationName BusStop]",
+          "TargetLocation": "BusStop",
+          "TargetTile": {
+            "X": 14,
+            "Y": 4
+          },
+          "TargetDirection": "down"
+        }
+      }
     }
   ]
 }
