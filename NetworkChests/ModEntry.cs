@@ -25,6 +25,12 @@ internal class ModEntry : Mod
         helper.Events.Input.ButtonPressed += OnButtonPressed;
         helper.Events.Display.RenderedActiveMenu += OnRenderedActiveMenu;
     }
+
+    public override object GetApi()
+    {
+        return new NetworkChestApi();
+    }
+
     private void OnGameLaunched(object? sender, GameLaunchedEventArgs e)
     {
         var api = this.Helper.ModRegistry

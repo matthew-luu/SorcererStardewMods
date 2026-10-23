@@ -8,8 +8,8 @@
 
 	<PropertyGroup>
 		<Version>0.1.0</Version>
-		<RootNamespace>NetworkChests</RootNamespace>
-		<AssemblyName>NetworkChests</AssemblyName>
+		<RootNamespace>NetworkChest</RootNamespace>
+		<AssemblyName>NetworkChest</AssemblyName>
 		<LangVersion>preview</LangVersion>
 		<ModFolderName>NetworkChests</ModFolderName>
 	</PropertyGroup>
